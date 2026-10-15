@@ -25,4 +25,16 @@ public class TaskController {
             @RequestBody TaskDto taskDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(taskService.saveTask(token, taskDto));
     }
+
+    @GetMapping
+    public ResponseEntity<List<TaskDto>> findTasksByUserEmail(@RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(taskService.findTasksByUserEmail(token));
+    }
+
+    @GetMapping("/events")
+    public ResponseEntity<List<TaskDto>> findTasksByEventDateBetween(
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+        return ResponseEntity.ok(taskService.findTasksByEventDateBetween(startDate, endDate));
+    }
 }

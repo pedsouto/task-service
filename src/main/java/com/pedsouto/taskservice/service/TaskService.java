@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -29,5 +30,17 @@ public class TaskService {
 
         Task task = taskMapper.toEntity(taskDto);
         return taskMapper.toDto(taskRepository.save(task));
+    }
+
+    @Transactional(readOnly = true)
+    public List<TaskDto> findTasksByEventDateBetween(LocalDateTime startDate, LocalDateTime endDate) {
+        return taskMapper.toDtoList(taskRepository.findByEventDateBetween(startDate, endDate));
+    }
+
+    @Transactional(readOnly = true)
+    public List<TaskDto> findTasksByUserEmail(String token) {
+        String email = jwtUtil.extractUsername(token.substring(7));
+        List<Task> tasks = taskRepository.findByUserEmail(email);
+        return taskMapper.toDtoList(tasks);
     }
 }
