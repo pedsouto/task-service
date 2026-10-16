@@ -6,7 +6,7 @@ spring:
       uri: mongodb://localhost:27017/task_db
 
 server:
-  port: 8081
+  port: ${SERVER_PORT:8081}
 
 user:
   url: http://localhost:8080

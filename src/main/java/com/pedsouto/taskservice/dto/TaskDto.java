@@ -2,7 +2,11 @@ package com.pedsouto.taskservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pedsouto.taskservice.infra.enums.NotificationStatus;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
