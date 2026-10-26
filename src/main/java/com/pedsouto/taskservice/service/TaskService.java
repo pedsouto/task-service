@@ -25,11 +25,12 @@ public class TaskService {
 
     public TaskDto saveTask(String token, TaskDto taskDto) {
         String email = jwtUtil.extractUsername(token.substring(7));
-        taskDto.setUserEmail(email);
-        taskDto.setCreatedAt(LocalDateTime.now());
-        taskDto.setNotificationStatus(NotificationStatus.PENDING);
-
         Task task = taskMapper.toEntity(taskDto);
+
+        task.setUserEmail(email);
+        task.setCreatedAt(LocalDateTime.now());
+        task.setNotificationStatus(NotificationStatus.PENDING);
+
         return taskMapper.toDto(taskRepository.save(task));
     }
 
