@@ -18,8 +18,8 @@ public class UserDetailsServiceImpl {
         UserDto userDto = userClient.findUserByEmail(email, token);
 
         return User
-                .withUsername(userDto.getEmail())
-                .password(userDto.getPassword())
+                .withUsername(userDto.email())
+                .password(userDto.password())
                 .build();
     }
 }
