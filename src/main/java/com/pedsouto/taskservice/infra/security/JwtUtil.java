@@ -3,6 +3,7 @@ package com.pedsouto.taskservice.infra.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -12,8 +13,11 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String secretString = "c3VwZXItc2VjcmV0LWtleS1mb3Itand0LXRva2VuLXNlY3VyZQ==";
-    private final SecretKey secretKey = Keys.hmacShaKeyFor(secretString.getBytes(StandardCharsets.UTF_8));
+    private final SecretKey secretKey;
+
+    public JwtUtil(@Value("${jwt.secret}") String secret) {
+        this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
 
     public Claims extractClaims(String token) {
         return Jwts.parser()
